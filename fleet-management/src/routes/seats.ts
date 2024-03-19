@@ -12,7 +12,7 @@ const pool = new Pool({
 })
 
 router.get('/', (req: Request, res: Response) => {
-    pool.query('SELECT * FROM fleetops.AIRCRAFTS ORDER BY id ASC', (error: any, results: { rows: any; }) => {
+    pool.query('SELECT * FROM fleetops.SEATS ORDER BY id ASC', (error: any, results: { rows: any; }) => {
         if (error) {
             throw error
         }
@@ -21,38 +21,38 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.post('/', (req: Request, res: Response) => {
-    pool.query('INSERT INTO fleetops.AIRCRAFTS (data) VALUES ($1) RETURNING *', [req.body], (error: any, results: {
+    pool.query('INSERT INTO fleetops.SEATS (data) VALUES ($1) RETURNING *', [req.body], (error: any, results: {
         rows: { id: any; }[];
     }) => {
         if (error) {
             throw error
         }
-        res.status(201).send(`Aircraft added with ID: ${results.rows[0].id}`)
+        res.status(201).send(`Seat added with ID: ${results.rows[0].id}`)
     })
 });
 
 router.put('/:id', (req: Request, res: Response) => {
-    const aircraftID = req.params.id;
+    const seatID = req.params.id;
 
-    pool.query('UPDATE fleetops.AIRCRAFTS set DATA = $1 where ID = $2 RETURNING *', [req.body, aircraftID], (error: any, results: {
+    pool.query('UPDATE fleetops.SEATS set DATA = $1 where ID = $2 RETURNING *', [req.body, seatID], (error: any, results: {
         rows: { id: any; }[];
     }) => {
         if (error) {
             throw error
         }
-        res.status(200).send(`Aircraft updated: ${results.rows[0].id}`)
+        res.status(200).send(`Seat updated: ${results.rows[0].id}`)
     })
 
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
-    const aircraftID = req.params.id;
+    const seatID = req.params.id;
 
-    pool.query('DELETE FROM fleetops.AIRCRAFTS WHERE id = $1', [aircraftID], (error: any, results: any) => {
+    pool.query('DELETE FROM fleetops.SEATS WHERE id = $1', [seatID], (error: any, results: any) => {
         if (error) {
             throw error
         }
-        res.status(200).send(`Aircraft deleted with ID: ${aircraftID}`)
+        res.status(200).send(`Seat deleted with ID: ${seatID}`)
     })
 });
 
