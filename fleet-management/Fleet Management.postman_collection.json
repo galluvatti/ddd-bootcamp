@@ -181,7 +181,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\n    \"model\": \"737-301\",\n    \"manufacturer\": \"Boeing\",\n    \"wingspan\": 28.9,\n    \"cabinWidth\": 3.54,\n    \"cabinHeight\": 2.2,\n    \"cabinLength\": 24.13,\n    \"cargoCapacity\": 27.5,\n    \"range\": 4444,\n    \"cruiseSpeed\": 0.785,\n    \"engineType\": \"CFM56-3 Series\",\n    \"noiseLevel\": \"65-70\"\n  }",
+					"raw": " {\n    \"model\": \"737-300\",\n    \"manufacturer\": \"Boeing\",\n    \"wingspan\": 28.9,\n    \"cabinWidth\": 3.54,\n    \"cabinHeight\": 2.2,\n    \"cabinLength\": 24.13,\n    \"cargoCapacity\": 27.5,\n    \"range\": 2222,\n    \"cruiseSpeed\": 0.785,\n    \"engineType\": \"CFM56-3 Series\",\n    \"noiseLevel\": \"65-70\"\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -189,14 +189,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/aircrafts/2",
+					"raw": "localhost:3000/aircrafts/737-300",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"aircrafts",
-						"2"
+						"737-300"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -225,7 +225,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"BIZ-ULTRA1\",\n    \"type\": \"Ultra Business Class\",\n    \"width\": 54,\n    \"height\": 101,\n    \"pitch\": 220,\n    \"weight\": 35,\n    \"productionDate\": 2018,\n    \"comfortLevel\": 100,\n    \"features\": [\"Ultimate lie-flat\", \"exclusive luxury features\"]\n  }",
+					"raw": "{\n    \"id\": \"BIZ-ULTRA1\",\n    \"type\": \"Ultra Business Class\",\n    \"width\": 55,\n    \"height\": 101,\n    \"pitch\": 220,\n    \"weight\": 35,\n    \"productionDate\": 2018,\n    \"comfortLevel\": 100,\n    \"features\": [\"Ultimate lie-flat\", \"exclusive luxury features\"]\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -233,14 +233,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/seats/1",
+					"raw": "localhost:3000/seats/BIZ-ULTRA",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"seats",
-						"1"
+						"BIZ-ULTRA"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -277,14 +277,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/aircrafts/1",
+					"raw": "localhost:3000/aircrafts/737-300",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"aircrafts",
-						"1"
+						"737-300"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -321,14 +321,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/aircrafts/1",
+					"raw": "localhost:3000/seats/BIZ-ULTRA",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"aircrafts",
-						"1"
+						"seats",
+						"BIZ-ULTRA"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
