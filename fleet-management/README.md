@@ -15,6 +15,7 @@ npm install
 docker-compose up
 
 #Start the Express Server
+npm run initdb
 npm start
 ```
 

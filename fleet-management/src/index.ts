@@ -1,6 +1,8 @@
 import express, {Request, Response} from 'express';
 import aircraftRoutes from './routes/aircrafts';
 import seatsRoutes from './routes/seats';
+import cabinLayoutsRoutes from './routes/cabinLayouts';
+import fleetUnitsRoutes from './routes/fleetUnits';
 import mongoose from "mongoose";
 
 const bodyParser = require('body-parser')
@@ -13,6 +15,8 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 app.use('/aircrafts', aircraftRoutes);
 app.use('/seats', seatsRoutes);
+app.use('/cabinLayouts', cabinLayoutsRoutes);
+app.use('/fleetUnits', fleetUnitsRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.json('Hello, TypeScript Express!');

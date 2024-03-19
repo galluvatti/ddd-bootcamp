@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-interface SeatType {
+export interface SeatType {
   seatTypeId: string;
   seatType: string;
   width: number;

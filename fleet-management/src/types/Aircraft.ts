@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-interface Aircraft {
+export interface Aircraft {
   model: string;
   manufacturer: string;
   wingspan: number;
