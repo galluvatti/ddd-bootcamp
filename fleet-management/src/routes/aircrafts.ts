@@ -1,59 +1,50 @@
 import {Request, Response, Router} from 'express';
+import {Aircraft} from "../types/Aircraft";
 
 const router = Router();
 
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'fleetops_user',
-    host: 'localhost',
-    database: 'fleetops_db',
-    password: 'S3cret',
-    port: 5432,
-})
 
-router.get('/', (req: Request, res: Response) => {
-    pool.query('SELECT * FROM AIRCRAFTS ORDER BY model ASC', (error: any, results: { rows: any; }) => {
-        if (error) {
-            res.status(500).send()
-        }
-        res.status(200).json(results.rows)
-    })
+router.get('/:model', async (req: Request, res: Response) => {
+    const model = req.params.model
+    const aircraft = await Aircraft.findOne({model});
+    if (!aircraft) {
+        return res.status(404).send();
+    }
+    res.status(200).send(aircraft);
 });
 
-router.post('/', (req: Request, res: Response) => {
-    pool.query('INSERT INTO AIRCRAFTS (model, data) VALUES ($1, $2) RETURNING *', [req.body.model, req.body], (error: any, results: {
-        rows: { id: any; }[];
-    }) => {
-        if (error) {
-            return res.status(500).send()
-        }
-        return res.status(201).send(`Aircraft added`)
-    })
+router.post('/', async (req: Request, res: Response) => {
+    const aircraft = new Aircraft(req.body);
+    const err = aircraft.validateSync();
+    if (err) {
+        return res.status(400).send();
+    }
+    try {
+        await aircraft.save();
+    } catch (err) {
+        res.status(500).send();
+    }
+    res.status(201).send(`Aircraft added`)
 });
 
-router.put('/:model', (req: Request, res: Response) => {
-    const aircraftModel = req.params.model;
-
-    pool.query('UPDATE AIRCRAFTS set DATA = $1 where MODEL = $2 RETURNING *', [req.body, aircraftModel], (error: any, results: {
-        rows: { id: any; }[];
-    }) => {
-        if (error) {
-            return res.status(500).send()
-        }
-        return res.status(200).send(`Aircraft updated: ${aircraftModel}`)
-    })
-
+router.put('/:model', async (req: Request, res: Response) => {
+    const model = req.params.model
+    const aircraft = await Aircraft.findOneAndUpdate({model}, req.body);
+    if (!aircraft) {
+        return res.status(404).send('Aircraft not found');
+    }
+    await aircraft.save();
+    res.status(200).send();
 });
 
-router.delete('/:model', (req: Request, res: Response) => {
-    const aircraftModel = req.params.model;
+router.delete('/:model', async (req: Request, res: Response) => {
+    const model = req.params.model
 
-    pool.query('DELETE FROM AIRCRAFTS WHERE model = $1', [aircraftModel], (error: any, results: any) => {
-        if (error) {
-            return res.status(500).send()
-        }
-         return res.status(200).send(`Aircraft deleted with ID: ${aircraftModel}`)
-    })
+    const aircraft = await Aircraft.findOneAndDelete({model});
+    if (!aircraft) {
+        return res.status(404).send();
+    }
+    res.status(200).send(aircraft);
 });
 
 export default router;

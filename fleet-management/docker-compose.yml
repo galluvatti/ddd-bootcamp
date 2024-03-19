@@ -1,13 +1,17 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres:14-alpine
+  mongo:
+    image: mongo:7.0.6
+    restart: always
     ports:
-      - 5432:5432
+      - 27017:27017
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - mongo-data:/data/db
     environment:
-      - POSTGRES_PASSWORD=S3cret
-      - POSTGRES_USER=fleetops_user
-      - POSTGRES_DB=fleetops_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      ONGO_INITDB_DATABASE: evilton-fleet-management
+
+volumes:
+  mongo-data:

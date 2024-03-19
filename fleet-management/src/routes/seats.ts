@@ -1,57 +1,45 @@
 import {Request, Response, Router} from 'express';
+import {SeatType} from "../types/SeatType";
 
 const router = Router();
 
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'fleetops_user',
-    host: 'localhost',
-    database: 'fleetops_db',
-    password: 'S3cret',
-    port: 5432,
-})
-
-router.get('/', (req: Request, res: Response) => {
-    pool.query('SELECT * FROM SEAT_TYPES ORDER BY id ASC', (error: any, results: { rows: any; }) => {
-        if (error) {
-            res.status(500).send()
-        }
-        res.status(200).json(results.rows)
-    })
+router.get('/:seatTypeId', async (req: Request, res: Response) => {
+    const seatTypeId = req.params.seatTypeId
+    const seatType = await SeatType.findOne({seatTypeId});
+    if (!seatType) {
+        return res.status(404).send();
+    }
+    res.status(200).send(seatType);
 });
 
-router.post('/', (req: Request, res: Response) => {
-    pool.query('INSERT INTO SEAT_TYPES (id, data) VALUES ($1, $2) RETURNING *', [req.body.id, req.body], (error: any, results: {
-        rows: { id: any; }[];
-    }) => {
-        if (error) {
-            res.status(500).send()
-        }
-        res.status(201).send(`Seat added with ID: ${results.rows[0].id}`)
-    })
+router.post('/', async (req: Request, res: Response) => {
+    const seatType = new SeatType(req.body);
+    const err = seatType.validateSync();
+    if (err) {
+        return res.status(400).send();
+    }
+    await seatType.save();
+    res.status(201).send();
 });
 
-router.put('/:id', (req: Request, res: Response) => {
-    const seatID = req.params.id;
-
-    pool.query('UPDATE SEAT_TYPES set DATA = $1 where ID = $2 RETURNING *', [req.body, seatID], (error: any) => {
-        if (error) {
-            res.status(500).send()
-        }
-        res.status(200).send(`Seat updated: ${seatID}`)
-    })
-
+router.put('/:seatTypeId', async (req: Request, res: Response) => {
+    const seatTypeId = req.params.seatTypeId;
+    const seatType = await SeatType.findOneAndUpdate({seatTypeId}, req.body);
+    if (!seatType) {
+        return res.status(404).send();
+    }
+    await seatType.save();
+    res.status(200).send();
 });
 
-router.delete('/:id', (req: Request, res: Response) => {
-    const seatID = req.params.id;
+router.delete('/:seatTypeId', async (req: Request, res: Response) => {
+    const seatTypeId = req.params.seatTypeId;
+    const seatType = await SeatType.findOneAndDelete({seatTypeId});
+    if (!seatType) {
+        return res.status(404).send();
+    }
+    res.status(200).send(seatType);
 
-    pool.query('DELETE FROM SEAT_TYPES WHERE id = $1', [seatID], (error: any, results: any) => {
-        if (error) {
-            res.status(500).send()
-        }
-        res.status(200).send(`Seat deleted with ID: ${seatID}`)
-    })
 });
 
 export default router;
