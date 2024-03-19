@@ -22,14 +22,17 @@ router.post('/', async (req: Request, res: Response) => {
     try {
         await aircraft.save();
     } catch (err) {
-        res.status(500).send();
+        return res.status(500).send();
     }
     res.status(201).send(`Aircraft added`)
 });
 
 router.put('/:model', async (req: Request, res: Response) => {
     const model = req.params.model
-    const aircraft = await Aircraft.findOneAndUpdate({model}, req.body);
+    const expectedVersion = req.body.version as number
+    const query = {model: model, version: expectedVersion}
+
+    const aircraft = await Aircraft.findOneAndUpdate(query, {...req.body, version : expectedVersion+1});
     if (!aircraft) {
         return res.status(404).send('Aircraft not found');
     }

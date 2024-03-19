@@ -12,6 +12,7 @@ interface Aircraft {
   cruiseSpeed: number;
   engineType: string;
   noiseLevel: string;
+  version: number;
 }
 
 const schema = new Schema<Aircraft>({
@@ -26,6 +27,7 @@ const schema = new Schema<Aircraft>({
   cruiseSpeed: { type: Number, required: true },
   engineType: { type: String, required: true },
   noiseLevel: { type: String, required: true },
+  version: { type: Number, required: true, default: 1 },
 });
 
 export const Aircraft = model('Aircraft', schema);

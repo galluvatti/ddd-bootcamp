@@ -24,7 +24,10 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.put('/:seatTypeId', async (req: Request, res: Response) => {
     const seatTypeId = req.params.seatTypeId;
-    const seatType = await SeatType.findOneAndUpdate({seatTypeId}, req.body);
+    const expectedVersion = req.body.version as number
+    const query = {seatTypeId: seatTypeId, version: expectedVersion}
+
+    const seatType = await SeatType.findOneAndUpdate(query, {...req.body, version: expectedVersion + 1});
     if (!seatType) {
         return res.status(404).send();
     }

@@ -14,6 +14,7 @@ const a1 = new Aircraft({
     cruiseSpeed: 0.785,
     engineType: 'CFM56-3 Series',
     noiseLevel: '65-70',
+    version: 1
 });
 
 const st1 = new SeatType({
@@ -26,6 +27,7 @@ const st1 = new SeatType({
     productionDate: 1980,
     comfortLevel: 5,
     features: ['Wooden', 'non-reclining', 'minimal cushion'],
+    version: 1
 });
 
 (async function main() {

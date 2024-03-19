@@ -10,6 +10,7 @@ interface SeatType {
   productionDate: number;
   comfortLevel: number;
   features: string[];
+  version: number;
 }
 
 const schema = new Schema<SeatType>({
@@ -22,6 +23,7 @@ const schema = new Schema<SeatType>({
   productionDate: { type: Number, required: true },
   comfortLevel: { type: Number, required: true },
   features: { type: [String], required: true },
+  version: { type: Number, required: true, default: 1 },
 });
 
 export const SeatType = model('SeatType', schema);
