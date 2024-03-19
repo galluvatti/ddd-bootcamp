@@ -1,4 +1,5 @@
 import {Request, Response, Router} from 'express';
+import {Aircraft} from "../types/aircraft";
 
 const router = Router();
 
@@ -29,6 +30,20 @@ router.post('/', (req: Request, res: Response) => {
         }
         res.status(201).send(`Aircraft added with ID: ${results.rows[0].id}`)
     })
+});
+
+router.put('/:id', (req: Request, res: Response) => {
+    const aircraftID = req.params.id;
+
+    pool.query('UPDATE fleetops.AIRCRAFTS set DATA = $1 where ID = $2 RETURNING *', [req.body, aircraftID], (error: any, results: {
+        rows: { id: any; }[];
+    }) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).send(`Aircraft updated: ${results.rows[0].id}`)
+    })
+
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
