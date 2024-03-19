@@ -3,9 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.49">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>757</IntrospectionStateNumber>
+      <IntrospectionStateNumber>783</IntrospectionStateNumber>
       <ServerVersion>14.11</ServerVersion>
-      <StartupTime>1710841925</StartupTime>
+      <StartupTime>1710852693</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -802,7 +802,7 @@ true posixrules
 13457||10|C|G
 13457||-9223372036854775808|U|G
 13457||10|U|G</Grants>
-      <IntrospectionStateNumber>757</IntrospectionStateNumber>
+      <IntrospectionStateNumber>783</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>fleetops_user</OwnerName>
     </database>
@@ -4219,11 +4219,8 @@ true posixrules
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
     <schema id="260" parent="2" name="fleetops">
-      <IntrospectionStateNumber>757</IntrospectionStateNumber>
-      <IntrospectionTimestamp>2024-03-19.12:07:31.541</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2024-03-19.11:07:31</LocalIntrospectionTimestamp>
-      <ObjectId>16385</ObjectId>
-      <StateNumber>736</StateNumber>
+      <ObjectId>16432</ObjectId>
+      <StateNumber>782</StateNumber>
       <OwnerName>fleetops_user</OwnerName>
     </schema>
     <schema id="261" parent="2" name="information_schema">
@@ -4240,99 +4237,88 @@ true posixrules
     <schema id="263" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>737</IntrospectionStateNumber>
-      <IntrospectionTimestamp>2024-03-19.11:33:32.884</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2024-03-19.10:33:33</LocalIntrospectionTimestamp>
+      <IntrospectionStateNumber>783</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2024-03-19.13:55:20.867</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2024-03-19.12:55:21</LocalIntrospectionTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>fleetops_user</OwnerName>
     </schema>
-    <sequence id="264" parent="260" name="aircrafts_id_seq">
-      <DasType>integer|0s</DasType>
-      <ObjectId>16391</ObjectId>
-      <SequenceIdentity>1(3)</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>743</StateNumber>
-      <OwnerName>fleetops_user</OwnerName>
-    </sequence>
-    <sequence id="265" parent="260" name="seats_id_seq">
-      <DasType>integer|0s</DasType>
-      <ObjectId>16400</ObjectId>
-      <SequenceIdentity>1(1)</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>756</StateNumber>
-      <OwnerName>fleetops_user</OwnerName>
-    </sequence>
-    <table id="266" parent="260" name="aircrafts">
-      <ObjectId>16386</ObjectId>
-      <StateNumber>744</StateNumber>
+    <table id="264" parent="263" name="aircrafts">
+      <ObjectId>16418</ObjectId>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>fleetops_user</OwnerName>
     </table>
-    <table id="267" parent="260" name="seats">
-      <ObjectId>16401</ObjectId>
-      <StateNumber>756</StateNumber>
+    <table id="265" parent="263" name="seat_types">
+      <ObjectId>16425</ObjectId>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>fleetops_user</OwnerName>
     </table>
-    <column id="268" parent="266" name="id">
-      <DasType>integer|0s</DasType>
-      <DefaultExpression>nextval(&apos;fleetops.aircrafts_id_seq&apos;::regclass)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <SequenceId>16391</SequenceId>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="269" parent="266" name="data">
-      <DasType>json|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>744</StateNumber>
-      <TypeId>114</TypeId>
-    </column>
-    <index id="270" parent="266" name="aircrafts_pk">
-      <ColNames>id</ColNames>
-      <ObjectId>16398</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="271" parent="266" name="aircrafts_pk">
-      <ObjectId>16399</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
-      <UnderlyingIndexId>16398</UnderlyingIndexId>
-    </key>
-    <column id="272" parent="267" name="id">
-      <DasType>integer|0s</DasType>
-      <DefaultExpression>nextval(&apos;fleetops.seats_id_seq&apos;::regclass)</DefaultExpression>
+    <column id="266" parent="264" name="model">
+      <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>756</StateNumber>
-      <SequenceId>16400</SequenceId>
-      <TypeId>23</TypeId>
+      <StateNumber>781</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
-    <column id="273" parent="267" name="data">
+    <column id="267" parent="264" name="data">
       <DasType>json|0s</DasType>
       <Position>2</Position>
-      <StateNumber>756</StateNumber>
+      <StateNumber>781</StateNumber>
       <TypeId>114</TypeId>
     </column>
-    <index id="274" parent="267" name="SEATS_pk">
-      <ColNames>id</ColNames>
-      <ObjectId>16407</ObjectId>
+    <index id="268" parent="264" name="aircrafts_pkey">
+      <ColNames>model</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16423</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>756</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="275" parent="267" name="SEATS_pk">
-      <ObjectId>16408</ObjectId>
+    <key id="269" parent="264" name="aircrafts_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16424</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>756</StateNumber>
-      <UnderlyingIndexId>16407</UnderlyingIndexId>
+      <StateNumber>781</StateNumber>
+      <UnderlyingIndexId>16423</UnderlyingIndexId>
+    </key>
+    <column id="270" parent="265" name="id">
+      <DasType>varchar(30)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>781</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="271" parent="265" name="data">
+      <DasType>json|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>781</StateNumber>
+      <TypeId>114</TypeId>
+    </column>
+    <index id="272" parent="265" name="seat_types_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16430</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>781</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="273" parent="265" name="seat_types_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16431</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>781</StateNumber>
+      <UnderlyingIndexId>16430</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

@@ -12,20 +12,20 @@ const pool = new Pool({
 })
 
 router.get('/', (req: Request, res: Response) => {
-    pool.query('SELECT * FROM fleetops.SEATS ORDER BY id ASC', (error: any, results: { rows: any; }) => {
+    pool.query('SELECT * FROM SEAT_TYPES ORDER BY id ASC', (error: any, results: { rows: any; }) => {
         if (error) {
-            throw error
+            res.status(500).send()
         }
         res.status(200).json(results.rows)
     })
 });
 
 router.post('/', (req: Request, res: Response) => {
-    pool.query('INSERT INTO fleetops.SEATS (data) VALUES ($1) RETURNING *', [req.body], (error: any, results: {
+    pool.query('INSERT INTO SEAT_TYPES (id, data) VALUES ($1, $2) RETURNING *', [req.body.id, req.body], (error: any, results: {
         rows: { id: any; }[];
     }) => {
         if (error) {
-            throw error
+            res.status(500).send()
         }
         res.status(201).send(`Seat added with ID: ${results.rows[0].id}`)
     })
@@ -34,13 +34,11 @@ router.post('/', (req: Request, res: Response) => {
 router.put('/:id', (req: Request, res: Response) => {
     const seatID = req.params.id;
 
-    pool.query('UPDATE fleetops.SEATS set DATA = $1 where ID = $2 RETURNING *', [req.body, seatID], (error: any, results: {
-        rows: { id: any; }[];
-    }) => {
+    pool.query('UPDATE SEAT_TYPES set DATA = $1 where ID = $2 RETURNING *', [req.body, seatID], (error: any) => {
         if (error) {
-            throw error
+            res.status(500).send()
         }
-        res.status(200).send(`Seat updated: ${results.rows[0].id}`)
+        res.status(200).send(`Seat updated: ${seatID}`)
     })
 
 });
@@ -48,9 +46,9 @@ router.put('/:id', (req: Request, res: Response) => {
 router.delete('/:id', (req: Request, res: Response) => {
     const seatID = req.params.id;
 
-    pool.query('DELETE FROM fleetops.SEATS WHERE id = $1', [seatID], (error: any, results: any) => {
+    pool.query('DELETE FROM SEAT_TYPES WHERE id = $1', [seatID], (error: any, results: any) => {
         if (error) {
-            throw error
+            res.status(500).send()
         }
         res.status(200).send(`Seat deleted with ID: ${seatID}`)
     })

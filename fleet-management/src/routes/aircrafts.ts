@@ -12,47 +12,47 @@ const pool = new Pool({
 })
 
 router.get('/', (req: Request, res: Response) => {
-    pool.query('SELECT * FROM fleetops.AIRCRAFTS ORDER BY id ASC', (error: any, results: { rows: any; }) => {
+    pool.query('SELECT * FROM AIRCRAFTS ORDER BY model ASC', (error: any, results: { rows: any; }) => {
         if (error) {
-            throw error
+            res.status(500).send()
         }
         res.status(200).json(results.rows)
     })
 });
 
 router.post('/', (req: Request, res: Response) => {
-    pool.query('INSERT INTO fleetops.AIRCRAFTS (data) VALUES ($1) RETURNING *', [req.body], (error: any, results: {
+    pool.query('INSERT INTO AIRCRAFTS (model, data) VALUES ($1, $2) RETURNING *', [req.body.model, req.body], (error: any, results: {
         rows: { id: any; }[];
     }) => {
         if (error) {
-            throw error
+            return res.status(500).send()
         }
-        res.status(201).send(`Aircraft added with ID: ${results.rows[0].id}`)
+        return res.status(201).send(`Aircraft added`)
     })
 });
 
-router.put('/:id', (req: Request, res: Response) => {
-    const aircraftID = req.params.id;
+router.put('/:model', (req: Request, res: Response) => {
+    const aircraftModel = req.params.model;
 
-    pool.query('UPDATE fleetops.AIRCRAFTS set DATA = $1 where ID = $2 RETURNING *', [req.body, aircraftID], (error: any, results: {
+    pool.query('UPDATE AIRCRAFTS set DATA = $1 where MODEL = $2 RETURNING *', [req.body, aircraftModel], (error: any, results: {
         rows: { id: any; }[];
     }) => {
         if (error) {
-            throw error
+            return res.status(500).send()
         }
-        res.status(200).send(`Aircraft updated: ${results.rows[0].id}`)
+        return res.status(200).send(`Aircraft updated: ${aircraftModel}`)
     })
 
 });
 
-router.delete('/:id', (req: Request, res: Response) => {
-    const aircraftID = req.params.id;
+router.delete('/:model', (req: Request, res: Response) => {
+    const aircraftModel = req.params.model;
 
-    pool.query('DELETE FROM fleetops.AIRCRAFTS WHERE id = $1', [aircraftID], (error: any, results: any) => {
+    pool.query('DELETE FROM AIRCRAFTS WHERE model = $1', [aircraftModel], (error: any, results: any) => {
         if (error) {
-            throw error
+            return res.status(500).send()
         }
-        res.status(200).send(`Aircraft deleted with ID: ${aircraftID}`)
+         return res.status(200).send(`Aircraft deleted with ID: ${aircraftModel}`)
     })
 });
 
