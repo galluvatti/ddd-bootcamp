@@ -6,4 +6,4 @@ package-lock.json
 
 fleet-management.iml
 
-.idea/
+.idea/**
