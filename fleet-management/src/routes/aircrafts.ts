@@ -16,13 +16,16 @@ const pool = new Pool({
 // Add your CRUD API implementation here
 
 router.get('/', (req: Request, res: Response) => {
-    res.json('list of aircrafts');
+    pool.query('SELECT * FROM fleetops.AIRCRAFTS ORDER BY id ASC', (error: any, results: { rows: any; }) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
 });
 
 router.post('/', (req: Request, res: Response) => {
     console.log(req.body);
-    //Insert on DB
-
     pool.query('INSERT INTO fleetops.AIRCRAFTS (data) VALUES ($1) RETURNING *', [req.body], (error: any, results: { rows: { id: any; }[]; }) => {
         if (error) {
             throw error
