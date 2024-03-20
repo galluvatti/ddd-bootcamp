@@ -17,6 +17,7 @@ router.post('/', async (req: Request, res: Response) => {
     const cabinLayout = new CabinLayout(req.body);
     const err = cabinLayout.validateSync();
     if (err) {
+        console.log(err);
         return res.status(400).send();
     }
     try {

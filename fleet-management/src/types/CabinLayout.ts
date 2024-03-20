@@ -21,7 +21,7 @@ type SeatGroup = {
 
 const seatGroupSchema = new Schema<SeatGroup>({
   availableSeats: { type: Number, required: true },
-  aisleWidth: { type: Number, required: true },
+  aisleWidth: { type: Number, required: false, default: 0 },
 });
 
 const cabinRowSchema = new Schema<CabinRow>({
@@ -39,6 +39,8 @@ const cabinLayoutSchema = new Schema<CabinLayout>({
 });
 
 export const CabinLayout = model('CabinLayout', cabinLayoutSchema);
+export const CabinRow = model('CabinRow', cabinRowSchema);
+export const SeatGroup = model('SeatGroup', seatGroupSchema);
 
 //const row1: CabinRow = {
 //    type: 'BIZ-ADV',
