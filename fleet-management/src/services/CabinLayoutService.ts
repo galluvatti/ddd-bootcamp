@@ -11,6 +11,7 @@ export class CabinLayoutValidationError extends Error{
 export class CabinLayoutService {
 
     async validate(cabinLayout: CabinLayout) {
+        let overallLenght = 0;
         for await (const row of cabinLayout.rows) {
             if (row.extraSpace < 0 || row.extraSpace > 100) {
                 throw new CabinLayoutValidationError("Extra Space of each row must be in the range 0-100");

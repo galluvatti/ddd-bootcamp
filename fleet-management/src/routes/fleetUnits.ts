@@ -1,7 +1,10 @@
 import {Request, Response, Router} from 'express';
 import {FleetUnit} from "../types/FleetUnit";
+import {FleetUnitService} from "../services/FleetUnitService";
 
 const router = Router();
+
+const fleetUnitService = new FleetUnitService();
 
 
 router.get('/:tailNumber', async (req: Request, res: Response) => {
@@ -15,9 +18,12 @@ router.get('/:tailNumber', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
     const fleetUnit = new FleetUnit(req.body);
-    const err = fleetUnit.validateSync();
-    if (err) {
-        return res.status(400).send();
+    //const err = fleetUnit.validateSync();
+    try {
+        await fleetUnitService.validate(fleetUnit);
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send((err as Error).message);
     }
     try {
         await fleetUnit.save();
@@ -25,7 +31,7 @@ router.post('/', async (req: Request, res: Response) => {
         console.log(err);
         return res.status(500).send();
     }
-    res.status(201).send(`Cabin Layout added`)
+    res.status(201).send(`Fleet Unit added`)
 });
 
 router.put('/:tailNumber', async (req: Request, res: Response) => {

@@ -20,12 +20,12 @@ router.post('/', async (req: Request, res: Response) => {
     try {
         await cabinLayoutService.validate(cabinLayout);
     } catch (err) {
-        console.log(err);
         return res.status(400).send((err as Error).message);
     }
     try {
         await cabinLayout.save();
     } catch (err) {
+        console.log(err);
         return res.status(500).send();
     }
     res.status(201).send(`Cabin Layout added`)
