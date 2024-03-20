@@ -1,8 +1,10 @@
 import {Request, Response, Router} from 'express';
 import {CabinLayout} from "../types/CabinLayout";
+import {CabinLayoutService} from "../services/CabinLayoutService";
 
 const router = Router();
 
+const cabinLayoutService = new CabinLayoutService()
 
 router.get('/:id', async (req: Request, res: Response) => {
     const id = req.params.id
@@ -15,10 +17,11 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
     const cabinLayout = new CabinLayout(req.body);
-    const err = cabinLayout.validateSync();
-    if (err) {
+    try {
+        await cabinLayoutService.validate(cabinLayout);
+    } catch (err) {
         console.log(err);
-        return res.status(400).send();
+        return res.status(400).send((err as Error).message);
     }
     try {
         await cabinLayout.save();

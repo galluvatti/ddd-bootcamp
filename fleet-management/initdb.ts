@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
-import { Aircraft } from './src/types/Aircraft';
-import { SeatType } from './src/types/SeatType';
+import {Aircraft} from './src/types/Aircraft';
+import {SeatType} from './src/types/SeatType';
+import {CabinLayout, CabinRow, SeatGroup} from "./src/types/CabinLayout";
+import {FleetUnit} from "./src/types/FleetUnit";
 
 const a1 = new Aircraft({
     model: '737-300',
@@ -30,11 +32,58 @@ const st1 = new SeatType({
     version: 1
 });
 
+const cl1 = new CabinLayout(
+    {
+        id: 'C3005',
+        width: 310,
+        length: 4000,
+        rows: [
+            new CabinRow({
+                type: 'ECON-HRTG',
+                extraSpace: 0,
+                groups: [
+                    new SeatGroup({
+                        availableSeats: 2,
+                        aisleWidth: 106
+                    }),
+                    new SeatGroup({
+                        availableSeats: 2
+                    })
+                ]
+            }),
+            new CabinRow({
+                type: 'ECON-HRTG',
+                extraSpace: 0,
+                groups: [
+                    new SeatGroup({
+                        availableSeats: 3,
+                        aisleWidth: 40
+                    }),
+                    new SeatGroup({
+                        availableSeats: 3
+                    })
+                ]
+            })
+        ]
+    }
+);
+
+const fu1 = new FleetUnit(
+    {
+        tailNumber: 'E731',
+        model: '737-300',
+        manufacturingDate: '25/05/1984',
+        purchaseDate: '25/05/1980',
+        nextMaintenanceDate: '25/05/1994',
+        cabinLayoutId: 'C3005'
+    }
+);
+
 (async function main() {
     await mongoose.connect('mongodb://root:example@127.0.0.1/evilton-fleet-management?authSource=admin');
     await mongoose.connection.db.dropDatabase();
 
-    await Promise.allSettled([a1.save(), st1.save()]);
+    await Promise.allSettled([a1.save(), st1.save(), cl1.save(), fu1.save()]);
 
     await mongoose.connection.close();
 })();
